@@ -449,6 +449,21 @@ describe('selectors', () => {
         expect(wrapper.find('Wrapped(Twice(Bar))')).to.have.lengthOf(1);
       });
 
+      it('commas in displayName', () => {
+        class Baz extends React.Component {
+          render() {
+            return <div />;
+          }
+        }
+        Baz.displayName = 'Wrapped(Baz, Context)';
+        const wrapper = renderMethod((
+          <div>
+            <Baz />
+          </div>
+        ));
+        expect(wrapper.find('Wrapped(Foo, Context)')).to.have.lengthOf(1);
+      });
+
       it('parses booleans', () => {
         expectAttributeMatch(<div hidden />, '[hidden=true]', true);
         expectAttributeMatch(<div hidden />, '[hidden=false]', false);
